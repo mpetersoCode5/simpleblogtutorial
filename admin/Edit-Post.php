@@ -37,3 +37,55 @@
 	<p><input type='submit' name='submit' value='Update'></p>
 	
 </form>
+
+<?php
+if(isset($_POST['submit']))
+{
+	$_POST = array_map('stripslashes', $_POST);
+	
+	//collect form data
+	extract($_POST);
+	
+	//very basic validation
+	if($postID == '')
+	{
+		$error[] = 'This post is missing a valid id!';
+	}
+	
+	if($postTitle == '')
+	{
+		$error[] = 'Please enter the title.';
+	}
+	
+	if($postDesc == '')
+	{
+		$error[] = 'Please enter the description.';
+	}
+	
+	if($postCont == '')
+	{
+		$error[] = 'Please enter the content.';
+	}
+	
+	if(!isset($error))
+	{
+		try
+		{
+			//insert into database
+			$stmt = $db->prepare('UPDATE blog_posts SET postTitle = :postTitle, postDesc = :postDesc, postCont = :postCont WHERE postID = :postID');
+			$stmt->execute(array(
+				':postTitle' => $postTitle,
+				':postDesc' => $postDesc,
+				':postCont' => $postCont,
+				':postID' => $postID
+			));
+			
+			//redirect to index page
+			header('Location: index.php?action=updated');
+			exit;
+		} catch(PDOException $e) {
+			echo $e->getMessage();
+		}
+	}
+}
+?>

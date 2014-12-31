@@ -40,7 +40,19 @@ if(isset($_POST['submit']))
 	
 	try
 	{
+		//insert into database
+		$stmt = $db->prepare('INSERT INTO blog_members (username,password,email) VALUES (:username, :password, :email)');
+		$stmt->execute(array(
+			':username' => $username,
+			':password' => $hashedpassword,
+			':email' => $email
+		));
 		
+		//redirect to index page
+		header('Location: users.php?action=added');
+		exit;
+	} catch(PDOException $e) {
+		echo $e->getMessage();
 	}
 }
 ?>

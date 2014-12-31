@@ -1,15 +1,5 @@
-<?php
-	try
-	{
-		$stmt = $db->prepare('SELECT postID, postTitle, postDesc, postCont FROM blog_posts WHERE postID = :postID');
-		$stmt->execute(array(':postID' => $_GET['id']));
-		$row = $STMT->fetch();
-	} catch(PDOException $e)
-	{
-		echo $e->getMessage();
-	}
-	
-?>
+<?php session_start(); ?>
+<?php ob_start(); ?>
 <?php include('menu.php'); ?>
 <?php 
 	require_once("../includes/config.php");
@@ -17,6 +7,18 @@
 	{
 		header('Location: login.php');
 	}
+?>
+<?php
+	try
+	{
+		$stmt = $db->prepare('SELECT postID, postTitle, postDesc, postCont FROM blog_posts WHERE postID = :postID');
+		$stmt->execute(array(':postID' => $_GET['id']));
+		$row = $stmt->fetch();
+	} catch(PDOException $e)
+	{
+		echo $e->getMessage();
+	}
+	
 ?>
 
 <form action='' method='post'>

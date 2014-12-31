@@ -1,6 +1,6 @@
 <?php
 	ob_start();
-	session_start();
+	// session_start();
 
 	//database credentials
 	define('DBHOST', 'localhost');
@@ -18,12 +18,12 @@
 	
 		$class = strtolower($class);
 	
-		$classpath = 'classes/class.'.$class.'.php';
+		$classpath = 'classes/Class.'.$class.'.php';
 		if(file_exists($classpath)) {
 			require_once $classpath;
 		}
 	
-		$classpath = '../classes/class.'.$class.'.php';
+		$classpath = '../classes/Class.'.$class.'.php';
 		if(file_exists($classpath)) {
 			require_once $classpath;
 		}

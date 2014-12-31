@@ -1,12 +1,14 @@
-<?php include('menu.php'); ?>
+<?php session_start(); ?>
+<?php ob_start(); ?>
+<?php include('menu.php'); ?> 
 <?php
 	//include config
 	require_once('../includes/config.php');
 	
 	//if not logged in redirect to login page
-	if(!$user->is_logged_in())
+	if($user->is_logged_in())
 	{
-		header('Location: login.php');
+		header('Location: index.php');
 	}
 ?>	
 	<form action="" method="post">

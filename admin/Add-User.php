@@ -1,10 +1,7 @@
+<?php session_start(); ?>
 <?php include('menu.php'); ?>
 <?php 
 	require_once("../includes/config.php");
-	if(!$user->is_logged_in())
-	{
-		header('Location: login.php');
-	}
 ?>
 
 <form action='' method='post'>
@@ -32,7 +29,7 @@
 <?php
 if(isset($_POST['submit']))
 {
-	$_POST = arraymap('stripslashes', $_POST);
+	$_POST = array_map('stripslashes', $_POST);
 	
 	extract($_POST);
 	

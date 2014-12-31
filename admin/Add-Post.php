@@ -66,6 +66,18 @@
 				':postDate' => date('Y-m-d H:i:s')
 			));
 			
+			//redirect to index page
+			header('Location: index.php?action=added');
+			exit;
+			
+		} catch(PDOException $e) {
+			echo $e->getMessage();
+		}
+	}
+	
+	if(isset($error)) {
+		foreach($error as $error) {
+			echo '<p class="error">'.$error.'</p>';
 		}
 	}
 ?>

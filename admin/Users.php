@@ -27,3 +27,28 @@
 		echo '</tr>';
 	}
 ?>
+
+<script language="Javascript" type="text/javascript">
+function delUser(id, title)
+{
+	if(confirm("Are you sure you want to delete '" + title + "'"))
+	{
+		window.location.href = 'users.php?deluser=' + id;
+	}
+}
+</script>
+
+<?php
+if(isset($_GET['deluser']))
+{
+	//if user id is 1 ignore
+	if($_GET['deluser'] != '1')
+	{
+		$stmt = $db->prepare('DELETE FROM blog_members WHERE memberID = :memberID');
+		$stmt->execute(array(':memberID' => $_GET['deluser']));
+		
+		header('Location: users.php?action=deleted');
+		exit;
+	}
+}
+?>

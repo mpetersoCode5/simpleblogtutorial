@@ -1,9 +1,11 @@
 <?php session_start(); ?>
 <?php ob_start(); ?>
 <?php 
-	require_once("../includes/config.php");
+	
 ?>
 <?php
+
+
 class ViewPostAPI {
 	function __construct() {
 		
@@ -69,12 +71,23 @@ class ViewPostAPI {
 	
 	function sendResponse($status = 200, $body = '', $content_type = 'text/html')
 	{
-		
+		$status_header = 'HTTP/1.1 ' . $status . ' ' . $this->getStatusCodeMessage($status);
+		header($status_header);
+		header('Content-type: ' . $content_type);
+		echo $body;
 	}
 	
 	function ViewPosts()
 	{
+		require_once("../includes/config.php");
+		$stmt = $db->query('SELECT postID, postTitle, postDesc, postDate FROM blog_posts ORDER BY postID DESC');
+		$stack = array();
+		while($row = $stmt->fetch())
+		{
+			array_push($stack, $row);
+		}
 		
+		$this->sendResponse(200, json_encode($stack));
 	}
 }
 

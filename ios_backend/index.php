@@ -81,13 +81,16 @@ class ViewPostAPI {
 	{
 		require_once("../includes/config.php");
 		$stmt = $db->query('SELECT postID, postTitle, postDesc, postDate FROM blog_posts ORDER BY postID DESC');
-		$stack = array();
-		while($row = $stmt->fetch())
-		{
-			array_push($stack, $row);
-		}
-		
-		$this->sendResponse(200, json_encode($stack));
+		$result= $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$return = array();
+		foreach($result as $row)
+			{
+				$return[]=array('postID'=>$row['postID'],
+								'postTitle'=>$row['postTitle'],
+								'postDesc'=>$row['postDesc'],
+								'postDate'=>$row['postDate']);
+			} 
+		$this->sendResponse(200, json_encode($return));
 	}
 }
 

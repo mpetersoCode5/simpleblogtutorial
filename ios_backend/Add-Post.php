@@ -9,13 +9,13 @@
 ?>
 
 	<?php
-		//if form has been submitted process it
-		if(isset($_POST['submit']))
-		{
-			$_POST = array_map( 'stripslashes', $_POST);
 		
-			//collect form data
-			extract($_POST);
+		
+	$json = json_decode($jsonString);
+	
+	$postTitle = $json->postTitle;
+	$postDesc = $json->postDesc;
+	$postCont = $json->postCont;
 		
 			//very basic validation
 			if($postTitle == '')
@@ -51,7 +51,6 @@
 			} catch(PDOException $e) {
 				echo $e->getMessage();
 			}
-		}
 		}
 	}
 	?>

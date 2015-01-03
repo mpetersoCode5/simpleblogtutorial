@@ -8,7 +8,7 @@ require_once('../includes/config.php');
 			header('Location: login.php');
 		}
 ?>
-
+<?php include('menu.php') ?>
 <table>
 	<tr>
 		<th>Title</th>

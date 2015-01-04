@@ -51,6 +51,16 @@ class User
 		}
 	}
 	
+	public function iosLogin($username, $password)
+	{
+		$hashed = $this->get_user_hash($username);
+		
+		if($this->verify_hash($password, $hashed) == 1)
+		{
+			return true;
+		}
+	}
+	
 	public function logout()
 	{
 		session_destroy();
